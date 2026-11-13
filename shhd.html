@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>العد التنازلي</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #0d0d0d;
+            color: #ffffff;
+            font-family: system-ui, -apple-system, sans-serif;
+            direction: ltr; /* لترتيب الأرقام من اليسار لليمين: يوم - ساعة - دقيقة - ثانية */
+        }
+
+        .countdown {
+            display: flex;
+            gap: 20px;
+            text-align: center;
+        }
+
+        .box {
+            background-color: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 12px;
+            padding: 25px 20px;
+            min-width: 110px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+        }
+
+        .number {
+            display: block;
+            font-size: 3.5rem;
+            font-weight: bold;
+            color: #ff6b00;
+            line-height: 1;
+            margin-bottom: 10px;
+        }
+
+        .label {
+            font-size: 1rem;
+            color: #aaaaaa;
+        }
+
+        @media (max-width: 550px) {
+            .countdown {
+                gap: 10px;
+            }
+            .box {
+                min-width: 75px;
+                padding: 15px 10px;
+            }
+            .number {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="countdown" id="countdown">
+        <div class="box">
+            <span class="number" id="days">00</span>
+            <span class="label">يوم</span>
+        </div>
+        <div class="box">
+            <span class="number" id="hours">00</span>
+            <span class="label">ساعة</span>
+        </div>
+        <div class="box">
+            <span class="number" id="minutes">00</span>
+            <span class="label">دقيقة</span>
+        </div>
+        <div class="box">
+            <span class="number" id="seconds">00</span>
+            <span class="label">ثانية</span>
+        </div>
+    </div>
+
+    <script>
+        // تحديد التاريخ المستهدف: 27 نوفمبر 2026 الساعة 00:00:00
+        const targetDate = new Date("November 27, 2026 00:00:00").getTime();
+
+        const timer = setInterval(function() {
+            const now = new Date().getTime();
+            const distance = targetDate - now;
+
+            if (distance <= 0) {
+                clearInterval(timer);
+                document.getElementById("days").innerText = "00";
+                document.getElementById("hours").innerText = "00";
+                document.getElementById("minutes").innerText = "00";
+                document.getElementById("seconds").innerText = "00";
+                return;
+            }
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById("days").innerText = String(days).padStart(2, '0');
+            document.getElementById("hours").innerText = String(hours).padStart(2, '0');
+            document.getElementById("minutes").innerText = String(minutes).padStart(2, '0');
+            document.getElementById("seconds").innerText = String(seconds).padStart(2, '0');
+        }, 1000);
+    </script>
+
+</body>
+</html>
